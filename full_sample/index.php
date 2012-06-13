@@ -28,20 +28,12 @@ if(isset($_POST['passenger'])){
 	$pass->setCertificate('../../Certificate.p12'); // Set the path to your Pass Certificate (.p12 file)
 	$pass->setCertificatePassword('test123'); // Set password for certificate
 
-	/*
+	$pass->setJSON('{ 
 	"passTypeIdentifier": "pass.com.apple.test",
     "formatVersion": 1,
     "organizationName": "Flight Express",
     "serialNumber": "123456",
     "teamIdentifier": "AGK5BZEN3E",
-    */
-
-	$pass->setJSON('{ 
-	"passTypeIdentifier": "pass.nl.mijnbc.test",
-    "formatVersion": 1,
-    "organizationName": "Bernardinuscollege",
-    "serialNumber": "1234564",
-    "teamIdentifier": "AGKMBZTN3K",
     "backgroundColor": "rgb(107,156,196)",
     "logoText": "Flight info",
     "boardingPass": {
