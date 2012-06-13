@@ -34,7 +34,6 @@ class PKPass{
 		if(!file_exists('temp/')){
 			mkdir('temp');
 		}
-		file_put_contents('temp/pass.json',$this->JSON); 
 		$this->SHAs['pass.json'] = sha1($this->JSON);
 		foreach($this->files as $file){
 			if(stristr(basename($file),'icon') || stristr(basename($file),'logo')){
@@ -53,7 +52,7 @@ class PKPass{
 		$zip->open("pass.pkpass", ZIPARCHIVE::CREATE);
 		$zip->addFile('temp/signature','signature');
 		$zip->addFile('temp/manifest.json','manifest.json');
-		$zip->addFile('temp/pass.json','pass.json');
+		$zip->addFromString('pass.json',$this->JSON);
 		foreach($this->files as $file){
 			if(stristr(basename($file),'icon') || stristr(basename($file),'logo')){
 				$zip->addFile($file,ucfirst(basename($file)));
@@ -63,10 +62,10 @@ class PKPass{
 		$zip->close();
 		unlink('temp/signature');
 		unlink('temp/manifest.json');
-		header('Pragma: no-cache');
-		header('Content-type: application/vnd.apple.pkpass');
-		header('Content-length: '.filesize("pass.pkpass"));
+		@rmdir('temp');
 		header('Content-Disposition: attachment; filename="pass.pkpass"');
+		header('Content-Type: application/vnd.apple.pkpass');
+		header('Content-Length: '.filesize("pass.pkpass"));
 		echo file_get_contents('pass.pkpass');
 		unlink('pass.pkpass');
 	}
